@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-paper text-ink font-body antialiased;
+}
+
+::selection {
+  @apply bg-ember/20 text-ink;
+}
+
+:focus-visible {
+  outline: 2px solid theme("colors.ember");
+  outline-offset: 3px;
+}
+
+/* Scroll-reveal: elements start hidden, JS adds .is-visible via IntersectionObserver */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.container-x {
+  @apply mx-auto w-full max-w-[1400px] px-6 md:px-10;
+}
+
+/* ── Motion accents ─────────────────────────────────────────────────── */
+
+/* Soft blurred blobs used behind the hero for ambient motion */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* Continuous horizontal ticker (skills / tags strip) */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Custom cursor dot (desktop only, hidden on touch) */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: theme("colors.ember");
+  pointer-events: none;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s ease;
+  will-change: transform;
+}
+.cursor-dot.cursor-hover {
+  width: 36px;
+  height: 36px;
+  background: theme("colors.ember" / 15%);
+  border: 1px solid theme("colors.ember");
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot {
+    display: none;
+  }
+}
+
+/* Scroll progress bar under the header */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, theme("colors.ember"), theme("colors.emberLight"));
+  z-index: 60;
+  transform-origin: left;
+  transition: width 0.1s linear;
+}
+
+/* Media zoom-on-hover wrapper used inside project cards */
+.media-zoom {
+  overflow: hidden;
+}
+.media-zoom img,
+.media-zoom video {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.media-zoom:hover img,
+.media-zoom:hover video {
+  transform: scale(1.06) rotate(-0.5deg);
+}
