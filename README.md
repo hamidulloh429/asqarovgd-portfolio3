@@ -1,4 +1,4 @@
-# ASQAROVGD — Portfolio Website
+# ASQAROVGD — Portfolio Website.
 
 A production-ready portfolio for a Graphic Designer / Motion Designer / Video
 Editor, built with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind
